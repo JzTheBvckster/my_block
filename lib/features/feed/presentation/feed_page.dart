@@ -10,6 +10,10 @@ class FeedPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.surface,
+        surfaceTintColor: Colors.transparent,
+        scrolledUnderElevation: 0,
+        elevation: 0,
         title: const Text('Feed'),
         actions: [
           IconButton(
@@ -22,16 +26,24 @@ class FeedPage extends StatelessWidget {
           ),
         ],
       ),
-      body: ListView.separated(
-        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-        itemCount: 10,
-        separatorBuilder: (context, index) => const Divider(),
-        itemBuilder: (context, index) {
-          if (index == 0) {
-            return const _StoriesRow();
-          }
-          return const _PostCard();
-        },
+      body: Column(
+        children: [
+          Container(
+            color: Theme.of(context).colorScheme.surface,
+            padding: const EdgeInsets.symmetric(vertical: 8),
+            child: const _StoriesRow(),
+          ),
+          Expanded(
+            child: ListView.separated(
+              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+              itemCount: 10,
+              separatorBuilder: (context, index) => const Divider(),
+              itemBuilder: (context, index) {
+                return const _PostCard();
+              },
+            ),
+          ),
+        ],
       ),
       bottomNavigationBar: NavigationBar(
         destinations: const [
@@ -189,7 +201,7 @@ class _PostCardState extends State<_PostCard> {
               ),
             ),
             Gap.md,
-            const Text('A compact caption with smooth spacing and dividers.'),
+            const Text('A nigga dancing ruggedly and roughly'),
             Gap.sm,
             Row(
               children: [
