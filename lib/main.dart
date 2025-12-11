@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart' hide AuthProvider;
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:my_block/features/stories/data/stories_repository.dart';
 import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 import 'features/auth/data/auth_repository.dart';
@@ -32,6 +33,9 @@ class MainApp extends StatelessWidget {
         ),
         Provider<ProfileRepository>(
           create: (ctx) => ProfileRepository(ctx.read<FirestoreService>()),
+        ),
+        Provider<StoriesRepository>(
+          create: (_) => StoriesRepository(FirebaseFirestore.instance),
         ),
         ChangeNotifierProvider<my_auth.AuthProvider>(
           create: (ctx) => my_auth.AuthProvider(
