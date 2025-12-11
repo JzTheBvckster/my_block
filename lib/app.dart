@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'features/feed/presentation/feed_page.dart';
 import 'features/profile/presentation/profile_page.dart';
+import 'features/explore/presentation/explore_page.dart';
 
 class AppShell extends StatefulWidget {
   const AppShell({super.key});
@@ -20,7 +21,7 @@ class _AppShellState extends State<AppShell> {
         index: _index,
         children: const [
           FeedPage(),
-          SizedBox(), // TODO: Explore/Search page
+          ExplorePage(),
           SizedBox(), // TODO: Notifications page
           ProfilePage(),
         ],
