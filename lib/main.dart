@@ -11,6 +11,7 @@ import 'features/profile/data/profile_repository.dart';
 import 'core/utils/firestore_service.dart';
 import 'features/auth/presentation/login_page.dart';
 import 'app.dart';
+import 'core/theme/app_theme.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -46,10 +47,9 @@ class MainApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          useMaterial3: true,
-          colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF2EC4B6)),
-        ),
+        theme: AppTheme.light(),
+        darkTheme: AppTheme.dark(),
+        themeMode: ThemeMode.system,
         home: const _AuthGate(),
       ),
     );
