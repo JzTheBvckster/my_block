@@ -4,6 +4,7 @@ import 'package:my_block/features/feed/presentation/widgets/bottom_nav.dart';
 import '../../messages/presentation/messages_page.dart';
 import '../../profile/presentation/profile_page.dart';
 import '../../../core/widgets/spacing.dart';
+import 'widgets/post_card.dart';
 
 class FeedPage extends StatelessWidget {
   const FeedPage({super.key});
@@ -29,48 +30,11 @@ class FeedPage extends StatelessWidget {
         itemCount: 10,
         separatorBuilder: (context, index) => const Divider(),
         itemBuilder: (context, index) {
-          return const _PostCard();
+          return const PostCard();
         },
       ),
     );
   }
 }
 
-class _PostCard extends StatelessWidget {
-  const _PostCard();
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      elevation: 0,
-      clipBehavior: Clip.antiAlias,
-      child: Padding(
-        padding: const EdgeInsets.all(12),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: const [
-                CircleAvatar(radius: 16),
-                Gap.wsm,
-                Text('Dancer Name'),
-                Spacer(),
-                Icon(Icons.more_horiz),
-              ],
-            ),
-            Gap.md,
-            Container(
-              height: 160,
-              decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.surfaceContainerHighest,
-                borderRadius: BorderRadius.circular(12),
-              ),
-            ),
-            Gap.md,
-            const Text('A compact caption with smooth spacing and dividers.'),
-          ],
-        ),
-      ),
-    );
-  }
-}
+// PostCard moved to widgets/post_card.dart and reused here
