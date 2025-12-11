@@ -33,17 +33,28 @@ class FeedPage extends StatelessWidget {
       ),
       bottomNavigationBar: NavigationBar(
         destinations: const [
-          NavigationDestination(icon: Icon(Icons.home_outlined), label: ''),
-          NavigationDestination(icon: Icon(Icons.search), label: ''),
-          NavigationDestination(icon: Icon(Icons.add_box_outlined), label: ''),
           NavigationDestination(
-            icon: Icon(Icons.notifications_none),
+            icon: Icon(Icons.home_outlined, size: 30),
             label: '',
           ),
-          NavigationDestination(icon: Icon(Icons.person_outline), label: ''),
+          NavigationDestination(icon: Icon(Icons.search, size: 30), label: ''),
+          NavigationDestination(
+            icon: Icon(Icons.notifications_none, size: 30),
+            label: '',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.person_outline, size: 30),
+            label: '',
+          ),
         ],
         selectedIndex: 0,
         onDestinationSelected: (i) {},
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          // TODO: Navigate to create post page
+        },
+        child: const Icon(Icons.add),
       ),
     );
   }
