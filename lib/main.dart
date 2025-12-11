@@ -11,6 +11,7 @@ import 'core/utils/firestore_service.dart';
 import 'features/auth/presentation/login_page.dart';
 import 'features/feed/presentation/feed_page.dart';
 import 'features/stories/data/stories_repository.dart';
+import 'features/stories/data/stories_repository.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -33,6 +34,9 @@ class MainApp extends StatelessWidget {
         ),
         Provider<ProfileRepository>(
           create: (ctx) => ProfileRepository(ctx.read<FirestoreService>()),
+        ),
+        Provider<StoriesRepository>(
+          create: (_) => StoriesRepository(FirebaseFirestore.instance),
         ),
         ChangeNotifierProvider<my_auth.AuthProvider>(
           create: (ctx) => my_auth.AuthProvider(
