@@ -10,6 +10,7 @@ import 'features/profile/data/profile_repository.dart';
 import 'core/utils/firestore_service.dart';
 import 'features/auth/presentation/login_page.dart';
 import 'features/feed/presentation/feed_page.dart';
+import 'features/stories/data/stories_repository.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
