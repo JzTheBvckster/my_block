@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 import '../data/profile_repository.dart';
 import '../../auth/data/auth_provider.dart' as my_auth;
 import '../../auth/presentation/login_page.dart';
-import '../../messages/presentation/messages_page.dart';
+import '../../settings/presentation/settings_page.dart';
 import '../../feed/presentation/feed_page.dart';
 import '../../../core/widgets/spacing.dart';
 
@@ -28,11 +28,11 @@ class ProfilePage extends StatelessWidget {
         title: const Text('Profile'),
         actions: [
           IconButton(
-            icon: const Icon(Icons.chat_bubble_outline),
+            icon: const Icon(Icons.settings_outlined),
             onPressed: () {
               Navigator.of(
                 context,
-              ).push(MaterialPageRoute(builder: (_) => const MessagesPage()));
+              ).push(MaterialPageRoute(builder: (_) => const SettingsPage()));
             },
           ),
         ],
@@ -121,19 +121,6 @@ class ProfilePage extends StatelessWidget {
               Gap.sm,
               const PostCard(showHeader: false),
               Gap.xl,
-              FilledButton.icon(
-                onPressed: () async {
-                  final auth = context.read<my_auth.AuthProvider>();
-                  final navigator = Navigator.of(context);
-                  await auth.signOut();
-                  navigator.pushAndRemoveUntil(
-                    MaterialPageRoute(builder: (_) => const FeedPage()),
-                    (route) => false,
-                  );
-                },
-                icon: const Icon(Icons.logout),
-                label: const Text('Sign out'),
-              ),
             ],
           );
         },

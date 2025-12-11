@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'features/feed/presentation/feed_page.dart';
 import 'features/profile/presentation/profile_page.dart';
 import 'features/explore/presentation/explore_page.dart';
+import 'features/notifications/presentation/notifications_page.dart';
 
 class AppShell extends StatefulWidget {
   const AppShell({super.key});
@@ -22,7 +23,7 @@ class _AppShellState extends State<AppShell> {
         children: const [
           FeedPage(),
           ExplorePage(),
-          SizedBox(), // TODO: Notifications page
+          NotificationsPage(),
           ProfilePage(),
         ],
       ),

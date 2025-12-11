@@ -83,7 +83,7 @@ class _PostCardState extends State<PostCard> {
               ),
             ),
             Gap.md,
-            const Text('A compact caption with smooth spacing and dividers.'),
+            const Text('Rugged niggas doing the rugged nigga dancing forever.'),
             Gap.sm,
             Row(
               children: [
