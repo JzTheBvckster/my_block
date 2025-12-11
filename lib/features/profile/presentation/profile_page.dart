@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:my_block/features/feed/presentation/widgets/post_card.dart';
 import 'package:provider/provider.dart';
 
 import '../data/profile_repository.dart';
@@ -55,48 +56,70 @@ class ProfilePage extends StatelessWidget {
           return ListView(
             padding: const EdgeInsets.all(16),
             children: [
-              Row(
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   CircleAvatar(
-                    radius: 36,
+                    radius: 60,
                     backgroundImage: photoURL.isNotEmpty
                         ? NetworkImage(photoURL)
                         : null,
                     child: photoURL.isEmpty ? const Icon(Icons.person) : null,
                   ),
-                  Gap.wlg,
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          displayName,
-                          style: Theme.of(context).textTheme.titleMedium
-                              ?.copyWith(fontWeight: FontWeight.w700),
-                        ),
-                        if (username.isNotEmpty)
-                          Text(
-                            '@$username',
-                            style: Theme.of(context).textTheme.bodyMedium,
-                          ),
-                        Gap.sm,
-                        Row(
-                          children: [
-                            _Stat(label: 'Followers', value: followers),
-                            Gap.wmd,
-                            _Stat(label: 'Following', value: following),
-                          ],
-                        ),
-                      ],
+                  Gap.md,
+                  Text(
+                    displayName,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.w700,
                     ),
+                  ),
+                  if (username.isNotEmpty)
+                    Text(
+                      '@$username',
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                  Gap.sm,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      _Stat(label: 'Followers', value: followers),
+                      Gap.wxl,
+                      _Stat(label: 'Following', value: following),
+                    ],
                   ),
                 ],
               ),
               Gap.lg,
-              Text(
-                bio.isNotEmpty ? bio : 'No bio yet',
-                style: Theme.of(context).textTheme.bodyMedium,
+              Card(
+                elevation: 0,
+                child: Padding(
+                  padding: const EdgeInsets.all(12),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'About',
+                        style: Theme.of(context).textTheme.titleMedium
+                            ?.copyWith(fontWeight: FontWeight.w600),
+                      ),
+                      Gap.sm,
+                      Text(
+                        bio.isNotEmpty ? bio : 'No bio yet',
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                    ],
+                  ),
+                ),
               ),
+              Gap.lg,
+              // Temporarily reuse PostCard without header until real posts are wired
+              const PostCard(showHeader: false),
+              Gap.sm,
+              const PostCard(showHeader: false),
+              Gap.sm,
+              const PostCard(showHeader: false),
               Gap.xl,
               FilledButton.icon(
                 onPressed: () async {
@@ -119,6 +142,52 @@ class ProfilePage extends StatelessWidget {
   }
 }
 
+class _RecentPostsGrid extends StatelessWidget {
+  final String uid;
+  const _RecentPostsGrid({required this.uid});
+
+  @override
+  Widget build(BuildContext context) {
+    final repo = context.read<ProfileRepository>();
+    return StreamBuilder<List<Map<String, dynamic>>>(
+      stream: repo.watchUserPosts(uid, limit: 12),
+      builder: (context, snapshot) {
+        final posts = snapshot.data ?? const [];
+        if (snapshot.connectionState == ConnectionState.waiting &&
+            posts.isEmpty) {
+          return const Center(child: CircularProgressIndicator());
+        }
+        if (posts.isEmpty) {
+          return const Text('No posts yet');
+        }
+        return GridView.builder(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: posts.length,
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 3,
+            mainAxisSpacing: 8,
+            crossAxisSpacing: 8,
+          ),
+          itemBuilder: (context, index) {
+            final p = posts[index];
+            final mediaUrl = p['mediaUrl'] as String? ?? '';
+            return ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: Container(
+                color: Theme.of(context).colorScheme.surfaceContainerHighest,
+                child: mediaUrl.isNotEmpty
+                    ? Image.network(mediaUrl, fit: BoxFit.cover)
+                    : const Icon(Icons.image, size: 32),
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+}
+
 class _Stat extends StatelessWidget {
   final String label;
   final int value;
@@ -128,15 +197,20 @@ class _Stat extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Text(
           '$value',
+          textAlign: TextAlign.center,
           style: Theme.of(
             context,
           ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700),
         ),
-        Text(label, style: Theme.of(context).textTheme.bodySmall),
+        Text(
+          label,
+          textAlign: TextAlign.center,
+          style: Theme.of(context).textTheme.bodySmall,
+        ),
       ],
     );
   }

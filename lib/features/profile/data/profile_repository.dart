@@ -21,4 +21,17 @@ class ProfileRepository {
   Future<void> updateUserProfile(String uid, Map<String, dynamic> data) async {
     await _service.updateDocument(collection: 'users', docId: uid, data: data);
   }
+
+  Stream<List<Map<String, dynamic>>> watchUserPosts(
+    String uid, {
+    int limit = 12,
+  }) {
+    return FirebaseFirestore.instance
+        .collection('posts')
+        .where('uid', isEqualTo: uid)
+        .orderBy('createdAt', descending: true)
+        .limit(limit)
+        .snapshots()
+        .map((snap) => snap.docs.map((d) => d.data()).toList());
+  }
 }
