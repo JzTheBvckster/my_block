@@ -26,7 +26,7 @@ class StoryBubble extends StatelessWidget {
             shape: BoxShape.circle,
           ),
           child: CircleAvatar(
-            radius: 32,
+            radius: 36,
             backgroundImage: imageUrl.isNotEmpty
                 ? NetworkImage(imageUrl)
                 : null,
