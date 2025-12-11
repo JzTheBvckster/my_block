@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:my_block/features/feed/presentation/widgets/bottom_nav.dart';
 
 import '../../messages/presentation/messages_page.dart';
+import '../../profile/presentation/profile_page.dart';
 import '../../../core/widgets/spacing.dart';
 
 class FeedPage extends StatelessWidget {
@@ -30,31 +31,6 @@ class FeedPage extends StatelessWidget {
         itemBuilder: (context, index) {
           return const _PostCard();
         },
-      ),
-      bottomNavigationBar: NavigationBar(
-        destinations: const [
-          NavigationDestination(
-            icon: Icon(Icons.home_outlined, size: 30),
-            label: '',
-          ),
-          NavigationDestination(icon: Icon(Icons.search, size: 30), label: ''),
-          NavigationDestination(
-            icon: Icon(Icons.notifications_none, size: 30),
-            label: '',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.person_outline, size: 30),
-            label: '',
-          ),
-        ],
-        selectedIndex: 0,
-        onDestinationSelected: (i) {},
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // TODO: Navigate to create post page
-        },
-        child: const Icon(Icons.add),
       ),
     );
   }
@@ -86,7 +62,7 @@ class _PostCard extends StatelessWidget {
             Container(
               height: 160,
               decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.surfaceVariant,
+                color: Theme.of(context).colorScheme.surfaceContainerHighest,
                 borderRadius: BorderRadius.circular(12),
               ),
             ),

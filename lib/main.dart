@@ -9,7 +9,7 @@ import 'features/auth/data/auth_provider.dart' as my_auth;
 import 'features/profile/data/profile_repository.dart';
 import 'core/utils/firestore_service.dart';
 import 'features/auth/presentation/login_page.dart';
-import 'features/feed/presentation/feed_page.dart';
+import 'app.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -69,7 +69,7 @@ class _AuthGate extends StatelessWidget {
         if (user == null) {
           return const LoginPage();
         }
-        return const FeedPage();
+        return const AppShell();
       },
     );
   }
